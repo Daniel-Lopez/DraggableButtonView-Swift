@@ -96,6 +96,14 @@ class DraggableButtonView: UIView, UIGestureRecognizerDelegate {
             circleLayer.opacity = ds.bgOpacity
             circleLayer.strokeColor = ds.strokeColor.CGColor
             circleLayer.lineWidth = CGFloat(ds.strokeWidth)
+            
+            if let image = ds.bgImage {
+                let imageLayer = CALayer()
+                imageLayer.contents = image.CGImage
+                imageLayer.bounds = CGRect(x: 0, y: 0, width: rect.width / 2, height: rect.height / 2)
+                imageLayer.position = CGPoint(x: rect.width / 2, y: rect.width / 2)
+                circleLayer.addSublayer(imageLayer)
+            }
         } else {
             circleLayer.fillColor = DEFAULT_BG_COLOR
             circleLayer.opacity = DEFAULT_BG_OPACITY
@@ -130,4 +138,5 @@ protocol DraggableButtonViewDataSource: class {
     var strokeColor: UIColor { get }  // stroke color
     var strokeWidth: CGFloat { get }  // stroke(line) width
     var scaleFactor: CGFloat { get }  // scale factor on long press
+    var bgImage:    UIImage? { get }  // background image
 }

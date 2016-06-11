@@ -37,6 +37,7 @@ extension ViewController: DraggableButtonViewDataSource {
     var bgOpacity: Float { return 0.5 }
     var strokeWidth: CGFloat { return 2.0 }
     var scaleFactor: CGFloat { return 4.0 }
+    var bgImage: UIImage? { return UIImage(imageLiteral: "white-plus") }
 }
 
 // MARK: - DraggableViewDelegate
