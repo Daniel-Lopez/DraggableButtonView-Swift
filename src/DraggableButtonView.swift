@@ -23,7 +23,7 @@ class DraggableButtonView: UIView, UIGestureRecognizerDelegate {
     weak var delegate: DraggableButtonViewDelegate?
     weak var dataSource: DraggableButtonViewDataSource? {
         didSet {
-            // Need to check that dataSource was not set to null
+            // Need to check that dataSource was not set to nil
             guard let ds = dataSource else { return }
             scaleFactor = ds.scaleFactor
         }
