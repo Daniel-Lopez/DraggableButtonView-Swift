@@ -2,11 +2,15 @@
 Draggable Button View - Inspired by the scroll button on the Reddit iOS app
 
 ## Demo
----
+
+Long press to allow dragging, which is indicated by the button scaling up.
+
+Single tap to call the delegate method.
+
 <img src=demo.gif width=300 height=534 />
 
 ## Usage
----
+
 ### Programmatic
 ~~~swift
 let size = 50.0
