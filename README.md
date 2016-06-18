@@ -7,7 +7,7 @@ Long press to allow dragging, which is indicated by the button scaling up.
 
 Single tap to call the delegate method.
 
-<img src=demo.gif width=155 height=276 />
+<img src=buttonDemo.gif width=155 height=276 />
 
 ## Usage
 
