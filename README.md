@@ -3,7 +3,7 @@ Draggable Button View - Inspired by the scroll button on the Reddit iOS app
 
 ## Demo
 ---
-<img src=demo.gif width=300 height=534 />
+<img src=buttonDemo.gif width=155 height=276 />
 
 ## Usage
 ---
