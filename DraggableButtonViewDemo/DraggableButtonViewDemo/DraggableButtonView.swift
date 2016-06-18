@@ -61,7 +61,6 @@ class DraggableButtonView: UIView, UIGestureRecognizerDelegate {
         if gesture.state == .Began {
             canDrag = true
             circleLayer.transform = CATransform3DMakeScale(scaleFactor, scaleFactor, 1)
-            
         } else if gesture.state == .Ended {
             canDrag = false
             circleLayer.transform = CATransform3DMakeScale(1.0, 1.0, 1)
