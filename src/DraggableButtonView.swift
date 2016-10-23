@@ -10,15 +10,15 @@ import UIKit
 
 class DraggableButtonView: UIView, UIGestureRecognizerDelegate {
     
-    private let DEFAULT_BG_COLOR: CGColor = UIColor.blackColor().CGColor
-    private let DEFAULT_BG_OPACITY: Float = 0.4
-    private let DEFAULT_STROKE_COLOR: CGColor = UIColor.clearColor().CGColor
-    private let DEFAULT_STROKE_WIDTH: CGFloat = 2.0
+    fileprivate let DEFAULT_BG_COLOR: CGColor = UIColor.black.cgColor
+    fileprivate let DEFAULT_BG_OPACITY: Float = 0.4
+    fileprivate let DEFAULT_STROKE_COLOR: CGColor = UIColor.clear.cgColor
+    fileprivate let DEFAULT_STROKE_WIDTH: CGFloat = 2.0
     
-    private var canDrag = false
-    private var scaleFactor: CGFloat = 6.0
-    private var initialPoint = CGPointZero
-    private let circleLayer = CAShapeLayer()
+    fileprivate var canDrag = false
+    fileprivate var scaleFactor: CGFloat = 6.0
+    fileprivate var initialPoint = CGPoint.zero
+    fileprivate let circleLayer = CAShapeLayer()
     
     weak var delegate: DraggableButtonViewDelegate?
     weak var dataSource: DraggableButtonViewDataSource? {
@@ -41,65 +41,64 @@ class DraggableButtonView: UIView, UIGestureRecognizerDelegate {
         self.addGestureRecognizer(panRecognizer)
         self.addGestureRecognizer(longPressRecognizer)
         
-        backgroundColor = .clearColor()
+        backgroundColor = .clear
     }
     
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
     
-    @objc private func panDetected(gesture: UIPanGestureRecognizer) {
+    @objc fileprivate func panDetected(_ gesture: UIPanGestureRecognizer) {
         guard canDrag else { return }
         
-        let translation = gesture.translationInView(self.superview)
+        let translation = gesture.translation(in: self.superview)
         self.center = CGPoint(x: initialPoint.x + translation.x, y: initialPoint.y + translation.y)
     }
     
-    @objc private func longPressDetected(gesture: UILongPressGestureRecognizer) {
-        if gesture.state == .Began {
+    @objc fileprivate func longPressDetected(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
             canDrag = true
             circleLayer.transform = CATransform3DMakeScale(scaleFactor, scaleFactor, 1)
-            
-        } else if gesture.state == .Ended {
+        } else if gesture.state == .ended {
             canDrag = false
             circleLayer.transform = CATransform3DMakeScale(1.0, 1.0, 1)
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print(#function)
         if let sup = self.superview {
-            sup.bringSubviewToFront(self)
+            sup.bringSubview(toFront: self)
             initialPoint = self.center
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         guard let del = delegate else { return }
         
         if let touch = touches.first {
-            let touchPoint = touch.locationInView(self.superview)
+            let touchPoint = touch.location(in: self.superview)
             del.draggableViewTapped(at: touchPoint)
         }
     }
     
-    private func drawCircle(rect: CGRect) {
+    fileprivate func drawCircle(_ rect: CGRect) {
         
         let circlePath = UIBezierPath(roundedRect: rect, cornerRadius: rect.width / 2)
-        circleLayer.path = circlePath.CGPath
+        circleLayer.path = circlePath.cgPath
         
         if let ds = dataSource {
-            circleLayer.fillColor = ds.bgColor.CGColor
+            circleLayer.fillColor = ds.bgColor.cgColor
             circleLayer.opacity = ds.bgOpacity
-            circleLayer.strokeColor = ds.strokeColor.CGColor
+            circleLayer.strokeColor = ds.strokeColor.cgColor
             circleLayer.lineWidth = CGFloat(ds.strokeWidth)
             
             if let image = ds.bgImage {
                 let imageLayer = CALayer()
-                imageLayer.contents = image.CGImage
+                imageLayer.contents = image.cgImage
                 imageLayer.bounds = CGRect(x: 0, y: 0, width: rect.width / 2, height: rect.height / 2)
                 imageLayer.position = CGPoint(x: rect.width / 2, y: rect.width / 2)
                 circleLayer.addSublayer(imageLayer)
@@ -110,13 +109,13 @@ class DraggableButtonView: UIView, UIGestureRecognizerDelegate {
         }
         
         circleLayer.bounds = rect
-        circleLayer.position = CGPoint(x: CGRectGetMidX(rect),y: CGRectGetMidY(rect))
+        circleLayer.position = CGPoint(x: rect.midX,y: rect.midY)
         circleLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         layer.addSublayer(circleLayer)
     }
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         drawCircle(rect)
     }
 }
