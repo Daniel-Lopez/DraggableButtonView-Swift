@@ -8,14 +8,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    
+class ViewController: UIViewController
+{
     let sizeOfView: CGFloat = 30.0
     let colorHexStrings = ["EFDC05", "30A9DE", "E53A40", "090707"]
     let colorNames = ["yellow", "blue", "red", "black"]
     var backViews = [UIView]()
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
         addBackgroundViews()
@@ -31,7 +32,8 @@ class ViewController: UIViewController {
         view.addSubview(dragView)
     }
     
-    func addBackgroundViews() {
+    func addBackgroundViews()
+    {
         let size = CGSize(width: view.frame.width/2, height: view.frame.height/2)
         
         backViews.append(UIView(frame: CGRect(origin: CGPoint.zero, size: size)))
@@ -39,13 +41,15 @@ class ViewController: UIViewController {
         backViews.append(UIView(frame: CGRect(origin: CGPoint(x: 0, y: view.frame.height/2), size: size)))
         backViews.append(UIView(frame: CGRect(origin: CGPoint(x: view.frame.width/2, y: view.frame.height/2), size: size)))
         
-        for (i, backView) in backViews.enumerated() {
+        for (i, backView) in backViews.enumerated()
+        {
             backView.backgroundColor = colorFromHexString(colorHexStrings[i])
             view.addSubview(backView)
         }
     }
     
-    func colorFromHexString (_ hex: String) -> UIColor {
+    func colorFromHexString (_ hex: String) -> UIColor
+    {
         let cString: String = hex.trimmingCharacters(in: .whitespaces).uppercased()
         
         var rgbValue:UInt32 = 0
@@ -62,24 +66,27 @@ class ViewController: UIViewController {
 
 // MARK: - DraggableViewDataSource
 
-extension ViewController: DraggableButtonViewDataSource {
-    var bgColor: UIColor { return .black }
-    var strokeColor: UIColor { return .lightGray }
-    var bgOpacity: Float { return 0.5 }
-    var strokeWidth: CGFloat { return 2.0 }
-    var scaleFactor: CGFloat { return 5.0 }
-//    var bgImage: UIImage? { return UIImage(named: "white-plus") }
-    var bgImage: UIImage? { return nil }
+extension ViewController: DraggableButtonViewDataSource
+{
+    var bgColor:     UIColor  { return .black     }
+    var strokeColor: UIColor  { return .lightGray }
+    var bgOpacity:   Float    { return 0.5        }
+    var strokeWidth: CGFloat  { return 2.0        }
+    var scaleFactor: CGFloat  { return 5.0        }
+    var bgImage:     UIImage? { return nil        }
+//    var bgImage:     UIImage? { return UIImage(named: "white-plus") }
 }
 
 // MARK: - DraggableViewDelegate
 
-extension ViewController: DraggableButtonViewDelegate {
-    
-    func draggableViewTapped(at point: CGPoint) {
+extension ViewController: DraggableButtonViewDelegate
+{
+    func draggableViewTapped(at point: CGPoint)
+    {
         var color = ""
         
-        for (i, backView) in backViews.enumerated() where backView.frame.contains(point) {
+        for (i, backView) in backViews.enumerated() where backView.frame.contains(point)
+        {
             color = colorNames[i]
         }
         
